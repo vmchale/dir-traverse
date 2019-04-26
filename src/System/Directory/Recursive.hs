@@ -1,9 +1,11 @@
 module System.Directory.Recursive ( getDirRecursive ) where
 
+import           Control.Applicative (pure, (<$>))
 import           Control.Composition ((.*))
 import           Control.Monad       (filterM)
 import qualified Data.DList          as DL
 import           Data.Foldable       (fold)
+import           Data.Traversable    (traverse)
 import           System.Directory    (doesDirectoryExist, listDirectory)
 import           System.FilePath     ((</>))
 
@@ -16,7 +18,7 @@ getDirRecursive fp = do
         [] -> pure $ DL.fromList (mkRel <$> all')
         ds -> do
             next <- foldMapA getDirRecursive ds
-            pure $ next <> DL.fromList (mkRel <$> all')
+            pure $ next `DL.append` DL.fromList (mkRel <$> all')
 
     where foldMapA = fmap fold .* traverse
           mkRel = (fp </>)
