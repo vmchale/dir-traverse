@@ -1,0 +1,6 @@
+tags
+dist
+dist-*
+*.prof
+*.hp
+*.eventlog
