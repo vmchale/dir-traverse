@@ -13,12 +13,13 @@ import           System.FilePath     ((</>))
 getDirRecursive :: FilePath -> IO (DL.DList FilePath)
 getDirRecursive fp = do
     all' <- listDirectory fp
-    dirs <- filterM doesDirectoryExist (mkRel <$> all')
+    let all'' = mkRel <$> all'
+    dirs <- filterM doesDirectoryExist all''
     case dirs of
-        [] -> pure $ DL.fromList (mkRel <$> all')
+        [] -> pure $ DL.fromList all''
         ds -> do
             next <- foldMapA getDirRecursive ds
-            pure $ next `DL.append` DL.fromList (mkRel <$> all')
+            pure $ next `DL.append` DL.fromList all''
 
     where foldMapA = fmap fold .* traverse
           mkRel = (fp </>)
