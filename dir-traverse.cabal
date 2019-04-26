@@ -11,8 +11,6 @@ description:
     Simple cross-platform directory traversals in Haskell
 category: System, Directory
 build-type: Simple
-extra-source-files:
-    cabal.project.local
 extra-doc-files: README.md
                  CHANGELOG.md
 
@@ -28,10 +26,10 @@ library
     ghc-options: -Wall -O2
     build-depends:
         base >=4.5 && <5,
-        dlist,
+        dlist -any,
         directory >=1.2.5.0,
-        composition-prelude,
-        filepath
+        composition-prelude -any,
+        filepath -any
 
     if impl(ghc >=8.0)
         ghc-options: -Wincomplete-uni-patterns -Wincomplete-record-updates
@@ -47,13 +45,13 @@ benchmark dir-traverse-bench
     default-language: Haskell2010
     ghc-options: -Wall
     build-depends:
-        base >= 4.8,
+        base >=4.8,
         dir-traverse -any,
         criterion -any,
-        dirstream,
-        pipes,
-        pipes-safe,
-        system-filepath
+        dirstream -any,
+        pipes -any,
+        pipes-safe -any,
+        system-filepath -any
 
     if impl(ghc >=8.0)
         ghc-options: -Wincomplete-uni-patterns -Wincomplete-record-updates
