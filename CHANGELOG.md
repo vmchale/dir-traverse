@@ -1,5 +1,10 @@
 # dir-traverse
 
+## 0.2.0.0
+
+  * Remove dependency on `dlist` and `composition-prelude`
+  * Expand support through GHC 7.0.4
+
 ## 0.1.0.0
 
 Initial release
