@@ -1,5 +1,9 @@
 # dir-traverse
 
+## 0.2.0.1
+
+  * Fix performance silliness
+
 ## 0.2.0.0
 
   * Remove dependency on `dlist` and `composition-prelude`

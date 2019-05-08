@@ -14,10 +14,10 @@ getDirRecursive fp = do
     let all'' = mkRel <$> all'
     dirs <- filterM doesDirectoryExist all''
     case dirs of
-        [] -> pure $ all''
+        [] -> pure all''
         ds -> do
             next <- foldMapA getDirRecursive ds
-            pure $ next ++ all''
+            pure $ all'' ++ next
 
     where foldMapA = (fmap fold .) . traverse
           mkRel = (fp </>)
