@@ -6,8 +6,8 @@ import           Control.Applicative (pure, (<$>))
 import           Control.Monad       (filterM)
 import           Data.Foldable       (fold)
 import           Data.Traversable    (traverse)
-import           System.Directory    (doesDirectoryExist, getDirectoryContents)
-import           System.Info         (os)
+import           System.Directory    (doesDirectoryExist, listDirectory)
+import           System.FilePath     ((</>))
 
 
 {-# INLINE getSubdirsRecursive #-}
@@ -40,12 +40,3 @@ getDirRecursive fp = do
 
     where mkRel = (fp </>)
           foldMapA = (fmap fold .) . traverse
-
-(</>) :: FilePath -> FilePath -> FilePath
-(</>) x y =
-    case os of
-        "mingw32" -> x ++ "\\" ++ y
-        _         -> x ++ "/" ++ y
-
-listDirectory :: FilePath -> IO [FilePath]
-listDirectory = fmap (filter (\p -> p /= "." && p /= "..")) . getDirectoryContents
