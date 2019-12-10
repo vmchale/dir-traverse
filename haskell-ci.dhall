@@ -6,6 +6,7 @@ in    haskellCi.generalCi
         , haskellCi.haskellEnv haskellCi.matrixEnv
         , haskellCi.cabalDeps
         , haskellCi.cabalBuild
+        , haskellCi.cabalDoc
         ]
         ( Some
             { ghc =

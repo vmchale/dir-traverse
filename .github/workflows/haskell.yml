@@ -13,6 +13,8 @@ jobs:
           cabal build --enable-tests --enable-benchmarks --only-dependencies
       - name: Build
         run: "cabal build --enable-tests --enable-benchmarks"
+      - name: Documentation
+        run: "cabal haddock"
     strategy:
       matrix:
         cabal:
