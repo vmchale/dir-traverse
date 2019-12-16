@@ -23,7 +23,7 @@ getDirRecursive = getDirFiltered doesDirectoryExist
 getDirFiltered :: (FilePath -> IO Bool) -> FilePath -> IO [FilePath]
 getDirFiltered p fp = do
     all' <- listDirectory fp
-    all'' <- filterM p (mkRel <$> all')
+    all'' <- fmap mkRel <$> filterM p all'
     dirs <- filterM doesDirectoryExist all''
     case dirs of
         [] -> pure all''
