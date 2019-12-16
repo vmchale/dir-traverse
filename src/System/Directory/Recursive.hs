@@ -20,7 +20,9 @@ getDirRecursive = getDirFiltered (const (pure True))
 
 {-# INLINE getDirFiltered #-}
 -- | @since 0.2.2.0
-getDirFiltered :: (FilePath -> IO Bool) -> FilePath -> IO [FilePath]
+getDirFiltered :: (FilePath -> IO Bool) -- ^ Filepath filter
+               -> FilePath
+               -> IO [FilePath]
 getDirFiltered p fp = do
     all' <- listDirectory fp
     all'' <- filterM p (mkRel <$> all')
