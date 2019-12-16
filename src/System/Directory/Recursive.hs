@@ -13,22 +13,22 @@ import           System.FilePath     ((</>))
 
 -- | @since 0.2.1.0
 getSubdirsRecursive :: FilePath -> IO [FilePath]
-getSubdirsRecursive = getDirFiltered (const (pure True))
+getSubdirsRecursive = getDirFiltered doesDirectoryExist
 
 getDirRecursive :: FilePath -> IO [FilePath]
-getDirRecursive = getDirFiltered doesDirectoryExist
+getDirRecursive = getDirFiltered (const (pure True))
 
 {-# INLINE getDirFiltered #-}
 -- | @since 0.2.2.0
 getDirFiltered :: (FilePath -> IO Bool) -> FilePath -> IO [FilePath]
 getDirFiltered p fp = do
     all' <- listDirectory fp
-    all'' <- fmap mkRel <$> filterM p all'
+    all'' <- filterM p (mkRel <$> all')
     dirs <- filterM doesDirectoryExist all''
     case dirs of
         [] -> pure all''
         ds -> do
-            next <- foldMapA getDirRecursive ds
+            next <- foldMapA (getDirFiltered p) ds
             pure $ all'' ++ next
 
     where mkRel = (fp </>)
