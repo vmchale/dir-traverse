@@ -1,5 +1,6 @@
 module System.Directory.Recursive ( getDirRecursive
                                   , getSubdirsRecursive
+                                  , getDirFiltered
                                   ) where
 
 import           Control.Applicative (pure, (<$>))
@@ -10,27 +11,19 @@ import           System.Directory    (doesDirectoryExist, listDirectory)
 import           System.FilePath     ((</>))
 
 
-{-# INLINE getSubdirsRecursive #-}
 -- | @since 0.2.1.0
 getSubdirsRecursive :: FilePath -> IO [FilePath]
-getSubdirsRecursive fp = do
-    all' <- listDirectory fp
-    let all'' = mkRel <$> all'
-    dirs <- filterM doesDirectoryExist all''
-    case dirs of
-        [] -> pure dirs
-        ds -> do
-            next <- foldMapA getSubdirsRecursive ds
-            pure $ dirs ++ next
+getSubdirsRecursive = getDirFiltered (const (pure True))
 
-    where mkRel = (fp </>)
-          foldMapA = (fmap fold .) . traverse
-
-{-# INLINE getDirRecursive #-}
 getDirRecursive :: FilePath -> IO [FilePath]
-getDirRecursive fp = do
+getDirRecursive = getDirFiltered doesDirectoryExist
+
+{-# INLINE getDirFiltered #-}
+-- | @since 0.2.2.0
+getDirFiltered :: (FilePath -> IO Bool) -> FilePath -> IO [FilePath]
+getDirFiltered p fp = do
     all' <- listDirectory fp
-    let all'' = mkRel <$> all'
+    all'' <- filterM p (mkRel <$> all')
     dirs <- filterM doesDirectoryExist all''
     case dirs of
         [] -> pure all''
