@@ -1,6 +1,6 @@
 .PHONY: ci
 
-ci: .github/workflows/haskell.yml .github/workflows/hlint.yml
+ci: .github/workflows/haskell.yml .github/workflows/hlint.yml .github/workflows/dhall.yml
 
 .github/workflows:
 	mkdir -p $@
@@ -9,4 +9,7 @@ ci: .github/workflows/haskell.yml .github/workflows/hlint.yml
 	dhall-to-yaml --file $< --output $@
 
 .github/workflows/haskell.yml: haskell-ci.dhall .github/workflows
+	dhall-to-yaml --file $< --output $@
+
+.github/workflows/dhall.yml: dhall-ci.dhall .github/workflows
 	dhall-to-yaml --file $< --output $@
