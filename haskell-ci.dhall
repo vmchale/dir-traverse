@@ -10,12 +10,12 @@ in    haskellCi.generalCi
         ]
         ( Some
             { ghc =
-                [ haskellCi.GHC.GHC802
-                , haskellCi.GHC.GHC822
-                , haskellCi.GHC.GHC844
-                , haskellCi.GHC.GHC865
-                , haskellCi.GHC.GHC881
-                ]
+              [ haskellCi.GHC.GHC802
+              , haskellCi.GHC.GHC822
+              , haskellCi.GHC.GHC844
+              , haskellCi.GHC.GHC865
+              , haskellCi.GHC.GHC881
+              ]
             , cabal = [ haskellCi.Cabal.Cabal30 ]
             }
         )
