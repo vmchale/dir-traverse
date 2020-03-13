@@ -9,6 +9,7 @@ import           Data.Foldable       (fold)
 import           Data.Traversable    (traverse)
 import           System.Directory    (doesDirectoryExist, listDirectory)
 import           System.FilePath     ((</>))
+import           System.IO.Unsafe    (unsafeInterleaveIO)
 
 
 -- | @since 0.2.1.0
@@ -30,7 +31,7 @@ getDirFiltered p fp = do
     case dirs of
         [] -> pure all''
         ds -> do
-            next <- foldMapA (getDirFiltered p) ds
+            next <- unsafeInterleaveIO $ foldMapA (getDirFiltered p) ds
             pure $ all'' ++ next
 
     where mkRel = (fp </>)
