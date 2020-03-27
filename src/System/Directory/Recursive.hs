@@ -17,7 +17,7 @@ getSubdirsRecursive :: FilePath -> IO [FilePath]
 getSubdirsRecursive = getDirFiltered doesDirectoryExist
 
 getDirRecursive :: FilePath -> IO [FilePath]
-getDirRecursive = getDirFiltered (const (pure True))
+getDirRecursive = getDirFiltered (const $ pure True)
 
 {-# INLINE getDirFiltered #-}
 -- | @since 0.2.2.0
