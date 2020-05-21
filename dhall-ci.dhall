@@ -1,5 +1,5 @@
 let dhallCi =
-      https://raw.githubusercontent.com/vmchale/github-actions-dhall/master/dhall-ci.dhall sha256:2a8e60c47ac16cfe0bd02d9a348b175b841095e62918448ce9b3bf65fe8cfe78
+      https://raw.githubusercontent.com/vmchale/github-actions-dhall/master/dhall-ci.dhall sha256:ca3826e88b36decf1546e017eedce8def804eee021ef550562e09710f435bbbd
 
 in    dhallCi.dhallSteps
         [ dhallCi.dhallYamlInstall
