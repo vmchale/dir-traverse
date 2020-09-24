@@ -1,5 +1,6 @@
 module System.Directory.Recursive ( getDirRecursive
                                   , getSubdirsRecursive
+                                  , getFilesRecursive
                                   , getDirFiltered
                                   ) where
 
@@ -7,7 +8,7 @@ import           Control.Applicative (pure, (<$>))
 import           Control.Monad       (filterM)
 import           Data.Foldable       (fold)
 import           Data.Traversable    (traverse)
-import           System.Directory    (doesDirectoryExist, listDirectory)
+import           System.Directory    (doesDirectoryExist, doesFileExist, listDirectory)
 import           System.FilePath     ((</>))
 import           System.IO.Unsafe    (unsafeInterleaveIO)
 
@@ -18,6 +19,9 @@ getSubdirsRecursive = getDirFiltered doesDirectoryExist
 
 getDirRecursive :: FilePath -> IO [FilePath]
 getDirRecursive = getDirFiltered (const $ pure True)
+
+getFilesRecursive :: FilePath -> IO [FilePath]
+getFilesRecursive fp = getDirRecursive fp >>= filterM doesFileExist
 
 {-# INLINE getDirFiltered #-}
 -- | @since 0.2.2.0
