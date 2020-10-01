@@ -1,5 +1,9 @@
 # dir-traverse
 
+## 0.2.3.0
+
+  * Add `getFilesRecursive`
+
 ## 0.2.2.3
 
   * Performance improvements with `unsafeInterleaveIO`

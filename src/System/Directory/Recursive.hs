@@ -8,7 +8,8 @@ import           Control.Applicative (pure, (<$>))
 import           Control.Monad       (filterM)
 import           Data.Foldable       (fold)
 import           Data.Traversable    (traverse)
-import           System.Directory    (doesDirectoryExist, doesFileExist, listDirectory)
+import           System.Directory    (doesDirectoryExist, doesFileExist,
+                                      listDirectory)
 import           System.FilePath     ((</>))
 import           System.IO.Unsafe    (unsafeInterleaveIO)
 
@@ -25,7 +26,7 @@ getDirRecursive = getDirFiltered (const $ pure True)
 
 -- | Recursively get all files in the given directory.
 --
--- @since TODO
+-- @since 0.2.3.0
 getFilesRecursive :: FilePath -> IO [FilePath]
 getFilesRecursive fp = getDirRecursive fp >>= filterM doesFileExist
 
